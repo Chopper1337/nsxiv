@@ -994,6 +994,10 @@ int main(int argc, char *argv[])
 
 	set_timeout(redraw, 25, false);
 
+	if(animate_by_default){
+		ci_toggle_animation(1);
+	}
+
 	run();
 
 	return 0;

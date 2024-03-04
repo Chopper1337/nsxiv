@@ -6,14 +6,14 @@ static const int WIN_HEIGHT = 600;
 
 /* colors and font can be overwritten via X resource properties.
  * See nsxiv(1), X(7) section Resources and xrdb(1) for more information.
- *                                      X resource            value (NULL == default) */
-static const char *WIN_BG[]   = { "Nsxiv.window.background",   "white" };
-static const char *WIN_FG[]   = { "Nsxiv.window.foreground",   "black" };
-static const char *MARK_FG[]  = { "Nsxiv.mark.foreground",      NULL };
+ */
+static const char *DEFAULT_WIN_BG     = "black";
+static const char *DEFAULT_WIN_FG     = "white";
+static const char *DEFAULT_MARK_COLOR = NULL;  /* NULL means it will default to window foreground */
 #if HAVE_LIBFONTS
-static const char *BAR_BG[]   = { "Nsxiv.bar.background",       NULL };
-static const char *BAR_FG[]   = { "Nsxiv.bar.foreground",       NULL };
-static const char *BAR_FONT[] = { "Nsxiv.bar.font",            "monospace-8" };
+static const char *DEFAULT_BAR_BG     = NULL;  /* NULL means it will default to window background */
+static const char *DEFAULT_BAR_FG     = NULL;  /* NULL means it will default to window foreground */
+static const char *DEFAULT_FONT       = "monospace-8";
 
 /* if true, statusbar appears on top of the window */
 static const bool TOP_STATUSBAR = false;
@@ -53,7 +53,7 @@ static const int PAN_FRACTION = 5;
  * NOTE: higher cache size means better image reloading performance, but also
  * higher memory usage.
  */
-static const int CACHE_SIZE_MEM_PERCENTAGE = 3;          /* use 3% of total memory for cache */
+static const int CACHE_SIZE_MEM_PERCENTAGE = 5;          /* use 3% of total memory for cache */
 static const int CACHE_SIZE_LIMIT = 256 * 1024 * 1024;   /* but not above 256MiB */
 static const int CACHE_SIZE_FALLBACK = 32 * 1024 * 1024; /* fallback to 32MiB if we can't determine total memory */
 
@@ -68,7 +68,7 @@ static const bool ANTI_ALIAS = true;
 /* if true, use a checkerboard background for alpha layer,
  * toggled with 'A' key binding (overwritten via `--alpha-layer` option)
  */
-static const bool ALPHA_LAYER = false;
+static const bool ALPHA_LAYER = true;
 
 #endif
 #ifdef INCLUDE_THUMBS_CONFIG
@@ -95,7 +95,6 @@ static const int animate_by_default = 1;
 static const keymap_t keys[] = {
 	/* modifiers    key               function              argument */
 	{ 0,            XK_q,             g_quit,               0 },
-	{ 0,            XK_Q,             g_pick_quit,          0 },
 	{ 0,            XK_Return,        g_switch_mode,        None },
 	{ 0,            XK_f,             g_toggle_fullscreen,  None },
 	{ 0,            XK_b,             g_toggle_bar,         None },
