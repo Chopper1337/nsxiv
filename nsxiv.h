@@ -101,7 +101,7 @@ typedef enum {
 
 typedef struct {
 	const char *name; /* as given by user */
-	const char *path; /* always absolute */
+	const char *path; /* always absolute, result of realpath(3) */
 	fileflags_t flags;
 } fileinfo_t;
 
@@ -180,7 +180,7 @@ typedef struct {
 	unsigned int cnt;
 	unsigned int sel;
 	bool animate;
-	unsigned int framedelay;
+	int framedelay;
 	int length;
 } multi_img_t;
 
@@ -265,11 +265,13 @@ struct opt {
 	/* window: */
 	bool fullscreen;
 	bool hide_bar;
-	Window embed; /* unsigned long */
+	Window embed;
 	char *geometry;
 	char *res_name;
 
 	/* misc flags: */
+	const char *tns_filters;
+	bool tns_filters_is_blacklist;
 	bool quiet;
 	bool thumb_mode;
 	bool clean_cache;
@@ -293,6 +295,12 @@ typedef struct {
 	int y;
 } thumb_t;
 
+typedef struct {
+	const char *path;
+	int  len;
+	bool recursive;
+} thumb_filter_t;
+
 struct tns {
 	fileinfo_t *files;
 	thumb_t *thumbs;
@@ -312,7 +320,11 @@ struct tns {
 	int bw;
 	int dim;
 
+	thumb_filter_t *filters;
+	int filters_cnt;
+
 	bool dirty;
+	bool filters_is_blacklist;
 };
 
 void tns_clean_cache(void);
@@ -356,7 +368,7 @@ int r_closedir(r_dir_t*);
 char* r_readdir(r_dir_t*, bool);
 int r_mkdir(char*);
 void construct_argv(char**, unsigned int, ...);
-pid_t spawn(int*, int*, char *const []);
+pid_t spawn(int*, int*, int, char *const []);
 
 
 /* window.c */
