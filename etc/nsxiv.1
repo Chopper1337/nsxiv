@@ -37,12 +37,21 @@ manager.
 .BI "\-A, \-\-framerate " FRAMERATE
 Play animations with a constant frame rate set to
 .IR FRAMERATE .
+If
+.I FRAMERATE
+is set to 0 then animation playback is disabled.
 .TP
 .B "\-a, \-\-animate"
 Play animations of multi-frame images.
 .TP
-.B "\-b, \-\-no\-bar"
-Do not show statusbar at the bottom of the window.
+.B "\-b"
+Do not show statusbar.
+.TP
+.B "\-\-bar, \-\-no\-bar"
+Enables or disables statusbar.
+.B "\-\-no\-bar"
+is equivalent to
+.BR "\-b" .
 .TP
 .B "\-c, \-\-clean\-cache"
 Remove all orphaned cache files from the thumbnail cache directory and exit.
@@ -99,8 +108,8 @@ may be a floating-point number.
 Set scale mode according to MODE character. Supported modes are: [d]own,
 [f]it, [F]ill, [w]idth, [h]eight.
 .TP
-.B "\-t, \-\-thumbnail"
-Start in thumbnail mode.
+.BR "\-t, \-\-thumbnail" [=no]
+Start in thumbnail mode. The long option accepts an optional "no" to disable it.
 .TP
 .B "\-v, \-\-version"
 Print version information to standard output and exit.
